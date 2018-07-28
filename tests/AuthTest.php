@@ -60,12 +60,40 @@ class AuthTest extends TestCase
 
         $this->assertTrue($this->user->hasRole('role_a,role_b'));
         $this->assertFalse($this->user->hasRole('role_a,role_c'));
+
+        $this->assertTrue($this->user->hasRole('role_a & role_b'));
+        $this->assertFalse($this->user->hasRole('role_a & role_c'));
+
+        $this->assertTrue($this->user->hasRole('role_a && role_b'));
+        $this->assertFalse($this->user->hasRole('role_a && role_c'));
+
+        $this->assertTrue($this->user->hasRole('role_a and role_b'));
+        $this->assertFalse($this->user->hasRole('role_a and role_c'));
+
+        $this->assertTrue($this->user->hasRole('role_a AND role_b'));
+        $this->assertFalse($this->user->hasRole('role_a AND role_c'));
     }
 
     public function test_user_only_require_one_roles()
     {
         $this->assertTrue($this->user->hasRole('role_a|role_b'));
         $this->assertTrue($this->user->hasRole('role_a|role_c'));
+
+        $this->assertTrue($this->user->hasRole('role_a | role_b'));
+        $this->assertTrue($this->user->hasRole('role_a | role_c'));
+
+        $this->assertTrue($this->user->hasRole('role_a||role_b'));
+        $this->assertTrue($this->user->hasRole('role_a||role_c'));
+
+        $this->assertTrue($this->user->hasRole('role_a || role_b'));
+        $this->assertTrue($this->user->hasRole('role_a || role_c'));
+
+        $this->assertTrue($this->user->hasRole('role_a or role_b'));
+        $this->assertTrue($this->user->hasRole('role_a or role_c'));
+
+        $this->assertTrue($this->user->hasRole('role_a OR role_b'));
+        $this->assertTrue($this->user->hasRole('role_a OR role_c'));
+
         $this->assertFalse($this->user->hasRole('role_c'));
     }
 }

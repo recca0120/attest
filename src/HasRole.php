@@ -16,11 +16,14 @@ trait HasRole
         if (func_num_args() > 1) {
             $roles = func_get_args();
         } elseif (is_string($roles) === true) {
-            if (strpos($roles, '|') !== false) {
+            $andPattern = '/\s?(and|&&|&|,)\s?/i';
+            $orPattern = '/\s?(or|\|\||\|)\s?/i';
+
+            if (preg_match($orPattern, $roles) !== 0) {
                 $operator = 'or';
-                $roles = explode('|', $roles);
+                $roles = preg_split($orPattern, $roles);
             } else {
-                $roles = explode(',', $roles);
+                $roles = preg_split($andPattern, $roles);
             }
 
             $roles = array_map('trim', $roles);
