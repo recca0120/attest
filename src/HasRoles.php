@@ -2,7 +2,7 @@
 
 namespace Recca0120\Attest;
 
-trait HasRole
+trait HasRoles
 {
     public function roles()
     {
