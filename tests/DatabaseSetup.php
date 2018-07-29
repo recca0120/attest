@@ -2,43 +2,42 @@
 
 namespace Recca0120\Attest\Tests;
 
+use CreateRolesTable;
+use CreateUsersTable;
+use CreateRoleUserTable;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Container\Container;
+use Illuminate\Support\Facades\Facade;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 trait DatabaseSetup
 {
     protected function setupDatabase()
     {
+        $container = new Container;
         $capsule = new Capsule;
         $capsule->addConnection([
             'driver' => 'sqlite',
             'database' => ':memory:',
             'prefix' => '',
         ]);
-        $capsule->setEventDispatcher(new Dispatcher(new Container));
+        $capsule->setEventDispatcher(new Dispatcher($container));
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
 
-        Capsule::schema()->create('users', function ($table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
+        $container['db'] = $capsule;
 
-        Capsule::schema()->create('roles', function ($table) {
-            $table->increments('id');
-            $table->string('name')->unique();
-            $table->string('title');
-            $table->timestamps();
-        });
+        Facade::setFacadeApplication($container);
 
-        Capsule::schema()->create('role_user', function ($table) {
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('role_id');
-        });
+        $migrations = [
+            CreateUsersTable::class,
+            CreateRolesTable::class,
+            CreateRoleUserTable::class,
+        ];
+
+        foreach ($migrations as $migration) {
+            $schema = new $migration();
+            $schema->up();
+        }
     }
 }

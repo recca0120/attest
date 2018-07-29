@@ -56,3 +56,7 @@ if (function_exists('config_path') === false) {
             .($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
 }
+
+foreach (glob(__DIR__.'/../database/migrations/*.php') as $migration) {
+    require $migration;
+}
