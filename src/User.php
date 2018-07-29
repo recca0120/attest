@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    use HasRoles;
+    use HasRolesAndPermissions;
 
     /**
      * The attributes that are mass assignable.
