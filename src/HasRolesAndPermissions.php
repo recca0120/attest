@@ -19,7 +19,9 @@ trait HasRolesAndPermissions
                 ->join('permissions', function ($query) {
                     $query->on('permissions.id', '=', 'permission_role.permission_id');
                 })
-                ->selectRaw('permissions.*, role_user.user_id AS pivot_user_id, permission_role.permission_id AS pivot_permission_id')
+                ->select('permissions.*')
+                ->selectRaw('role_user.user_id AS pivot_user_id')
+                ->selectRaw('permission_role.permission_id AS pivot_permission_id')
         )->distinct();
     }
 }
