@@ -17,9 +17,9 @@ class AuthTest extends TestCase
         parent::setUp();
 
         $this->roles = Collection::make([
-            new Role(['title' => 'role_a', 'name' => 'role_a']),
-            new Role(['title' => 'role_a', 'name' => 'role_b']),
-            new Role(['title' => 'role_a', 'name' => 'role_c']),
+            new Role(['title' => 'administrator', 'name' => 'administrator']),
+            new Role(['title' => 'user', 'name' => 'user']),
+            new Role(['title' => 'guest', 'name' => 'guest']),
         ]);
 
         $this->user = new User([
@@ -34,9 +34,9 @@ class AuthTest extends TestCase
     /** @test */
     public function test_user_have_role_by_string()
     {
-        $this->assertTrue($this->user->hasRole('role_a'));
-        $this->assertTrue($this->user->hasRole('role_b'));
-        $this->assertFalse($this->user->hasRole('role_c'));
+        $this->assertTrue($this->user->hasRole('administrator'));
+        $this->assertTrue($this->user->hasRole('user'));
+        $this->assertFalse($this->user->hasRole('guest'));
     }
 
     public function test_user_have_role_by_role()
@@ -49,51 +49,51 @@ class AuthTest extends TestCase
     /** @test */
     public function test_user_must_have_all_roles()
     {
-        $this->assertTrue($this->user->hasRole(['role_a', 'role_b']));
-        $this->assertFalse($this->user->hasRole(['role_a', 'role_c']));
+        $this->assertTrue($this->user->hasRole(['administrator', 'user']));
+        $this->assertFalse($this->user->hasRole(['administrator', 'guest']));
 
-        $this->assertTrue($this->user->hasRole('role_a', 'role_b'));
-        $this->assertFalse($this->user->hasRole('role_a', 'role_c'));
+        $this->assertTrue($this->user->hasRole('administrator', 'user'));
+        $this->assertFalse($this->user->hasRole('administrator', 'guest'));
 
-        $this->assertTrue($this->user->hasRole('role_a, role_b'));
-        $this->assertFalse($this->user->hasRole('role_a, role_c'));
+        $this->assertTrue($this->user->hasRole('administrator, user'));
+        $this->assertFalse($this->user->hasRole('administrator, guest'));
 
-        $this->assertTrue($this->user->hasRole('role_a,role_b'));
-        $this->assertFalse($this->user->hasRole('role_a,role_c'));
+        $this->assertTrue($this->user->hasRole('administrator,user'));
+        $this->assertFalse($this->user->hasRole('administrator,guest'));
 
-        $this->assertTrue($this->user->hasRole('role_a & role_b'));
-        $this->assertFalse($this->user->hasRole('role_a & role_c'));
+        $this->assertTrue($this->user->hasRole('administrator & user'));
+        $this->assertFalse($this->user->hasRole('administrator & guest'));
 
-        $this->assertTrue($this->user->hasRole('role_a && role_b'));
-        $this->assertFalse($this->user->hasRole('role_a && role_c'));
+        $this->assertTrue($this->user->hasRole('administrator && user'));
+        $this->assertFalse($this->user->hasRole('administrator && guest'));
 
-        $this->assertTrue($this->user->hasRole('role_a and role_b'));
-        $this->assertFalse($this->user->hasRole('role_a and role_c'));
+        $this->assertTrue($this->user->hasRole('administrator and user'));
+        $this->assertFalse($this->user->hasRole('administrator and guest'));
 
-        $this->assertTrue($this->user->hasRole('role_a AND role_b'));
-        $this->assertFalse($this->user->hasRole('role_a AND role_c'));
+        $this->assertTrue($this->user->hasRole('administrator AND user'));
+        $this->assertFalse($this->user->hasRole('administrator AND guest'));
     }
 
     public function test_user_only_require_one_roles()
     {
-        $this->assertTrue($this->user->hasRole('role_a|role_b'));
-        $this->assertTrue($this->user->hasRole('role_a|role_c'));
+        $this->assertTrue($this->user->hasRole('administrator|user'));
+        $this->assertTrue($this->user->hasRole('administrator|guest'));
 
-        $this->assertTrue($this->user->hasRole('role_a | role_b'));
-        $this->assertTrue($this->user->hasRole('role_a | role_c'));
+        $this->assertTrue($this->user->hasRole('administrator | user'));
+        $this->assertTrue($this->user->hasRole('administrator | guest'));
 
-        $this->assertTrue($this->user->hasRole('role_a||role_b'));
-        $this->assertTrue($this->user->hasRole('role_a||role_c'));
+        $this->assertTrue($this->user->hasRole('administrator||user'));
+        $this->assertTrue($this->user->hasRole('administrator||guest'));
 
-        $this->assertTrue($this->user->hasRole('role_a || role_b'));
-        $this->assertTrue($this->user->hasRole('role_a || role_c'));
+        $this->assertTrue($this->user->hasRole('administrator || user'));
+        $this->assertTrue($this->user->hasRole('administrator || guest'));
 
-        $this->assertTrue($this->user->hasRole('role_a or role_b'));
-        $this->assertTrue($this->user->hasRole('role_a or role_c'));
+        $this->assertTrue($this->user->hasRole('administrator or user'));
+        $this->assertTrue($this->user->hasRole('administrator or guest'));
 
-        $this->assertTrue($this->user->hasRole('role_a OR role_b'));
-        $this->assertTrue($this->user->hasRole('role_a OR role_c'));
+        $this->assertTrue($this->user->hasRole('administrator OR user'));
+        $this->assertTrue($this->user->hasRole('administrator OR guest'));
 
-        $this->assertFalse($this->user->hasRole('role_c'));
+        $this->assertFalse($this->user->hasRole('guest'));
     }
 }

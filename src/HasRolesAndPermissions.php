@@ -6,12 +6,12 @@ trait HasRolesAndPermissions
 {
     use HasRoles;
     use HasPermissions {
-        permissions as rolePermissions;
+        permissions as userPermissions;
     }
 
     public function permissions()
     {
-        return $this->rolePermissions()->unionAll(
+        return $this->userPermissions()->unionAll(
             $this->roles()
                 ->join('permission_role', function ($query) {
                     $query->on('roles.id', '=', 'permission_role.role_id');

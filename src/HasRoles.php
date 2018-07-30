@@ -11,34 +11,72 @@ trait HasRoles
 
     public function hasRole($roles)
     {
-        $operator = 'and';
-
         if (func_num_args() > 1) {
-            $roles = func_get_args();
-        } elseif (is_string($roles) === true) {
-            $andPattern = '/\s?(and|&&|&|,)\s?/i';
-            $orPattern = '/\s?(or|\|\||\|)\s?/i';
-
-            if (preg_match($orPattern, $roles) !== 0) {
-                $operator = 'or';
-                $roles = preg_split($orPattern, $roles);
-            } else {
-                $roles = preg_split($andPattern, $roles);
-            }
-
-            $roles = array_map('trim', $roles);
+            return call_user_func([$this, 'hasRole'], func_get_args());
         }
 
-        $roles = is_array($roles) === false ? [$roles] : $roles;
+        if (is_string($roles) === true) {
+            if ($matched = $this->operatorAnd($this->roles, $roles) !== false) {
+                return $matched;
+            }
 
-        $names = array_map(function ($role) {
-            return $role instanceof Role ? $role->name : $role;
-        }, $roles);
+            if ($matched = $this->operatorOr($this->roles, $roles) !== false) {
+                return $matched;
+            }
+        }
 
-        $counts = $this->roles->filter(function ($role) use ($names) {
-            return in_array($role->name, $names) === true;
-        })->count();
+        return $this->requireAll(
+            $this->roles,
+            $this->getTargetName(is_array($roles) === true ? $roles : [$roles])
+        );
+    }
 
-        return $operator === 'and' ? $counts === count($names) : $counts > 0;
+    protected function operatorAnd($sources, $targets)
+    {
+        $pattern = '/(\sand\s|&&|&|,)/i';
+        if ((bool) preg_match($pattern, $targets) === false) {
+            return false;
+        }
+
+        return $this->requireAll($sources, preg_split($pattern, $targets));
+    }
+
+    protected function operatorOr($sources, $targets)
+    {
+        $pattern = '/(\sor\s|\|\||\|)/i';
+        if ((bool) preg_match($pattern, $targets) === false) {
+            return false;
+        }
+
+        return $this->requireOne($sources, preg_split($pattern, $targets));
+    }
+
+    protected function requireOne($sources, $targets)
+    {
+        foreach ($targets as $target) {
+            if ($sources->containsStrict('name', trim($target)) === true) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected function requireAll($sources, $targets)
+    {
+        foreach ($targets as $target) {
+            if ($sources->containsStrict('name', trim($target)) === false) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    protected function getTargetName(array $targets)
+    {
+        return array_map(function ($target) {
+            return is_object($target) ? $target->name : $target;
+        }, $targets);
     }
 }
