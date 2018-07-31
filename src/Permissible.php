@@ -45,7 +45,7 @@ trait Permissible
     protected function permitOne($sources, $targets)
     {
         foreach ($targets as $target) {
-            if ($sources->containsStrict('name', trim($target)) === true) {
+            if ($sources->containsStrict('slug', trim($target)) === true) {
                 return true;
             }
         }
@@ -56,7 +56,7 @@ trait Permissible
     protected function permitAll($sources, $targets)
     {
         foreach ($targets as $target) {
-            if ($sources->containsStrict('name', trim($target)) === false) {
+            if ($sources->containsStrict('slug', trim($target)) === false) {
                 return false;
             }
         }
