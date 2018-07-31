@@ -8,7 +8,7 @@ trait HasPermissions
 
     public function permissions()
     {
-        return $this->belongsToMany(Permission::class);
+        return $this->morphToMany(Permission::class, 'permissible');
     }
 
     public function hasPermission($permissions)
