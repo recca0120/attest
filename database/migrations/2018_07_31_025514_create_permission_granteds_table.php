@@ -17,6 +17,9 @@ class CreatePermissionGrantedsTable extends Migration
             $table->morphs('permission_granted');
             $table->unsignedInteger('permission_id');
 
+            $table->foreign('permission_id')->references('id')->on('permissions')
+                ->onUpdate('cascade')->onDelete('cascade');
+
             $table->primary(['permission_granted_type', 'permission_granted_id', 'permission_id']);
         });
     }
