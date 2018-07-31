@@ -23,17 +23,17 @@ trait HasRolesAndPermissions
         return $this->userPermissions()
             ->unionAll(
                 $roles
-                    ->join('permissibles', function ($join) use ($roleClass) {
-                        $join->on('permissible_type', '=', $roleClass)
-                            ->on('permissible_id', '=', 'role_user.role_id');
+                    ->join('permission_granteds', function ($join) use ($roleClass) {
+                        $join->on('permission_granted_type', '=', $roleClass)
+                            ->on('permission_granted_id', '=', 'role_user.role_id');
                     })
                     ->join('permissions', function ($join) {
-                        $join->on('permissions.id', '=', 'permissibles.permission_id');
+                        $join->on('permissions.id', '=', 'permission_granteds.permission_id');
                     })
                     ->select('permissions.*')
-                    ->selectRaw('permissibles.permissible_type AS pivot_permissible_type')
-                    ->selectRaw('permissibles.permissible_id AS pivot_permissible_id')
-                    ->selectRaw('permissibles.permission_id AS pivot_permission_id')
+                    ->selectRaw('permission_granteds.permission_granted_type AS pivot_permission_granted_type')
+                    ->selectRaw('permission_granteds.permission_granted_id AS pivot_permission_granted_id')
+                    ->selectRaw('permission_granteds.permission_id AS pivot_permission_id')
             )
             ->distinct('permissions.id');
     }

@@ -5,8 +5,8 @@ namespace Recca0120\Attest\Tests;
 use CreateRolesTable;
 use CreateRoleUserTable;
 use CreatePermissionsTable;
-use CreatePermissiblesTable;
 use Illuminate\Events\Dispatcher;
+use CreatePermissionGrantedsTable;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Schema;
@@ -44,7 +44,7 @@ trait DatabaseSetup
             CreateRolesTable::class,
             CreateRoleUserTable::class,
             CreatePermissionsTable::class,
-            CreatePermissiblesTable::class,
+            CreatePermissionGrantedsTable::class,
         ];
 
         foreach ($migrations as $migration) {
