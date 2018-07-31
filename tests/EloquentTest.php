@@ -98,11 +98,11 @@ class EloquentTest extends TestCase
 
     private function createRole($name)
     {
-        return Role::create(['title' => $name, 'name' => $name]);
+        return Role::create(['name' => $name, 'slug' => $name]);
     }
 
     private function createPermission($name)
     {
-        return Permission::create(['title' => $name, 'name' => $name]);
+        return Permission::create(['name' => $name, 'slug' => $name]);
     }
 }

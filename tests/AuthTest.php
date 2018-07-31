@@ -24,17 +24,17 @@ class AuthTest extends TestCase
         ]);
 
         $this->roles = Collection::make([
-            new Role(['title' => 'administrator', 'name' => 'administrator']),
-            new Role(['title' => 'user', 'name' => 'user']),
-            new Role(['title' => 'guest', 'name' => 'guest']),
+            $this->createRole('administrator'),
+            $this->createRole('user'),
+            $this->createRole('guest'),
         ]);
 
         $this->user->setRelation('roles', $this->roles->take(2));
 
         $this->permissions = Collection::make([
-            new Permission(['title' => 'read', 'name' => 'read']),
-            new Permission(['title' => 'write', 'name' => 'write']),
-            new Permission(['title' => 'create', 'name' => 'create']),
+            $this->createPermission('read'),
+            $this->createPermission('write'),
+            $this->createPermission('create'),
         ]);
 
         $this->user->setRelation('permissions', $this->permissions->take(2));
@@ -168,5 +168,15 @@ class AuthTest extends TestCase
         $this->assertTrue($this->user->hasPermission('read OR create'));
 
         $this->assertFalse($this->user->hasPermission('create'));
+    }
+
+    private function createRole($name)
+    {
+        return new Role(['name' => $name, 'slug' => $name]);
+    }
+
+    private function createPermission($name)
+    {
+        return new Permission(['name' => $name, 'slug' => $name]);
     }
 }

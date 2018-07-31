@@ -12,7 +12,7 @@ trait HasRolesAndPermissions
         HasRoles::permitOr insteadof HasPermissions;
         HasRoles::permitOne insteadof HasPermissions;
         HasRoles::permitAll insteadof HasPermissions;
-        HasRoles::getTargetName insteadof HasPermissions;
+        HasRoles::getTargetSlug insteadof HasPermissions;
     }
 
     public function permissions()

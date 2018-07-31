@@ -13,7 +13,7 @@ class Role extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'name'];
+    protected $fillable = ['name', 'slug'];
 
     public function users()
     {
