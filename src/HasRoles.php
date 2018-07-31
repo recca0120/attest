@@ -13,10 +13,9 @@ trait HasRoles
 
     public function hasRole($roles)
     {
-        if (func_num_args() > 1) {
-            return call_user_func([$this, 'hasRole'], func_get_args());
-        }
-
-        return $this->require($this->roles, $roles);
+        return $this->require(
+            $this->roles,
+            func_num_args() > 1 ? func_get_args() : $roles
+        );
     }
 }

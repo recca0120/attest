@@ -13,10 +13,9 @@ trait HasPermissions
 
     public function hasPermission($permissions)
     {
-        if (func_num_args() > 1) {
-            return call_user_func([$this, 'hasPermission'], func_get_args());
-        }
-
-        return $this->require($this->permissions, $permissions);
+        return $this->require(
+            $this->permissions,
+            func_num_args() > 1 ? func_get_args() : $permissions
+        );
     }
 }
