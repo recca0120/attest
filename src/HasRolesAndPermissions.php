@@ -7,11 +7,11 @@ trait HasRolesAndPermissions
     use HasRoles;
     use HasPermissions {
         permissions as userPermissions;
-        HasRoles::require insteadof HasPermissions;
-        HasRoles::operatorAnd insteadof HasPermissions;
-        HasRoles::operatorOr insteadof HasPermissions;
-        HasRoles::requireOne insteadof HasPermissions;
-        HasRoles::requireAll insteadof HasPermissions;
+        HasRoles::permit insteadof HasPermissions;
+        HasRoles::permitAnd insteadof HasPermissions;
+        HasRoles::permitOr insteadof HasPermissions;
+        HasRoles::permitOne insteadof HasPermissions;
+        HasRoles::permitAll insteadof HasPermissions;
         HasRoles::getTargetName insteadof HasPermissions;
     }
 

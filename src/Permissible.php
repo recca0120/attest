@@ -2,47 +2,47 @@
 
 namespace Recca0120\Attest;
 
-trait Ownable
+trait Permissible
 {
-    protected function require($sources, $targets)
+    protected function permit($sources, $targets)
     {
         if (is_string($targets) === true) {
-            if ($matched = $this->operatorAnd($sources, $targets) !== false) {
+            if ($matched = $this->permitAnd($sources, $targets) !== false) {
                 return $matched;
             }
 
-            if ($matched = $this->operatorOr($sources, $targets) !== false) {
+            if ($matched = $this->permitOr($sources, $targets) !== false) {
                 return $matched;
             }
         }
 
-        return $this->requireAll(
+        return $this->permitAll(
             $sources,
             $this->getTargetName(is_array($targets) === true ? $targets : [$targets])
         );
     }
 
-    protected function operatorAnd($sources, $targets)
+    protected function permitAnd($sources, $targets)
     {
         $pattern = '/(\sand\s|&&|&|,)/i';
         if ((bool) preg_match($pattern, $targets) === false) {
             return false;
         }
 
-        return $this->requireAll($sources, preg_split($pattern, $targets));
+        return $this->permitAll($sources, preg_split($pattern, $targets));
     }
 
-    protected function operatorOr($sources, $targets)
+    protected function permitOr($sources, $targets)
     {
         $pattern = '/(\sor\s|\|\||\|)/i';
         if ((bool) preg_match($pattern, $targets) === false) {
             return false;
         }
 
-        return $this->requireOne($sources, preg_split($pattern, $targets));
+        return $this->permitOne($sources, preg_split($pattern, $targets));
     }
 
-    protected function requireOne($sources, $targets)
+    protected function permitOne($sources, $targets)
     {
         foreach ($targets as $target) {
             if ($sources->containsStrict('name', trim($target)) === true) {
@@ -53,7 +53,7 @@ trait Ownable
         return false;
     }
 
-    protected function requireAll($sources, $targets)
+    protected function permitAll($sources, $targets)
     {
         foreach ($targets as $target) {
             if ($sources->containsStrict('name', trim($target)) === false) {

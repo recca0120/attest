@@ -4,7 +4,7 @@ namespace Recca0120\Attest;
 
 trait HasRoles
 {
-    use Ownable;
+    use Permissible;
 
     public function roles()
     {
@@ -13,7 +13,7 @@ trait HasRoles
 
     public function hasRole($roles)
     {
-        return $this->require(
+        return $this->permit(
             $this->roles,
             func_num_args() > 1 ? func_get_args() : $roles
         );

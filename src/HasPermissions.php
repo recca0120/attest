@@ -4,7 +4,7 @@ namespace Recca0120\Attest;
 
 trait HasPermissions
 {
-    use Ownable;
+    use Permissible;
 
     public function permissions()
     {
@@ -13,7 +13,7 @@ trait HasPermissions
 
     public function hasPermission($permissions)
     {
-        return $this->require(
+        return $this->permit(
             $this->permissions,
             func_num_args() > 1 ? func_get_args() : $permissions
         );
