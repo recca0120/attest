@@ -24,9 +24,9 @@ class AuthTest extends TestCase
         ]);
 
         $this->roles = Collection::make([
-           $this->createRole('administrator'),
-           $this->createRole('user'),
-           $this->createRole('guest'),
+            $this->createRole('administrator'),
+            $this->createRole('user'),
+            $this->createRole('guest'),
         ]);
 
         $this->user->setRelation('roles', $this->roles->take(2));
