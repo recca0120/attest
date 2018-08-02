@@ -20,7 +20,7 @@ class CreatePermissionGrantedsTable extends Migration
             $table->foreign('permission_id')->references('id')->on('permissions')
                 ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->primary(['permission_granted_type', 'permission_granted_id', 'permission_id'], 'permission_granted_primary_key');
+            $table->primary(['permission_granted_type', 'permission_granted_id', 'permission_id'], 'permission_granted_index');
         });
     }
 
