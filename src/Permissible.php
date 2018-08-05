@@ -15,7 +15,7 @@ trait Permissible
 
         return $this->permitAll(
             $sources,
-            $this->getTargetSlug(is_array($targets) === true ? $targets : [$targets])
+            $this->getPermissibleName(is_array($targets) === true ? $targets : [$targets])
         );
     }
 
@@ -63,7 +63,7 @@ trait Permissible
         return true;
     }
 
-    protected function getTargetSlug(array $targets)
+    protected function getPermissibleName(array $targets)
     {
         return array_map(function ($target) {
             return is_object($target) ? $target->slug : $target;
