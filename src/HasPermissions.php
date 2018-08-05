@@ -8,7 +8,11 @@ trait HasPermissions
 
     public function permissions()
     {
-        return $this->morphToMany(Permission::class, 'permission_granted');
+        return $this->morphToMany(Permission::class, 'permission_granted')->withPivot([
+            'permission_granted_id',
+            'permission_granted_type',
+            'permission_id',
+        ]);
     }
 
     public function hasPermission($permissions)

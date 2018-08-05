@@ -15,11 +15,19 @@ class Permission extends Model
 
     public function roles()
     {
-        return $this->morphedByMany(Role::class, 'permissible');
+        return $this->morphedByMany(Role::class, 'permissible')->withPivot([
+            'permission_granted_id',
+            'permission_granted_type',
+            'permission_id',
+        ]);
     }
 
     public function users()
     {
-        return $this->morphedByMany(User::class, 'permissible');
+        return $this->morphedByMany(User::class, 'permissible')->withPivot([
+            'permission_granted_id',
+            'permission_granted_type',
+            'permission_id',
+        ]);
     }
 }

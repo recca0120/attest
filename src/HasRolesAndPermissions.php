@@ -20,7 +20,8 @@ trait HasRolesAndPermissions
         $roles = $this->roles();
         $roleClass = get_class($roles->getModel());
 
-        return $this->userPermissions()
+        return $this
+            ->userPermissions()
             ->unionAll(
                 $roles
                     ->join('permission_granteds', function ($join) use ($roleClass) {
