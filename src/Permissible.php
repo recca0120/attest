@@ -6,14 +6,11 @@ trait Permissible
 {
     protected function permit($sources, $targets)
     {
-        if (is_string($targets) === true) {
-            if ($matched = $this->permitAnd($sources, $targets) !== false) {
-                return $matched;
-            }
-
-            if ($matched = $this->permitOr($sources, $targets) !== false) {
-                return $matched;
-            }
+        if (is_string($targets) === true && (
+            $this->permitAnd($sources, $targets) === true ||
+            $this->permitOr($sources, $targets) === true
+        )) {
+            return true;
         }
 
         return $this->permitAll(
