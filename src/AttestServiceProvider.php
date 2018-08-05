@@ -7,6 +7,13 @@ use Illuminate\Contracts\Auth\Access\Gate;
 
 class AttestServiceProvider extends ServiceProvider
 {
+    /**
+     * Bootstrap the application events.
+     *
+     * @param \Illuminate\Contracts\Auth\Access\Gate
+     *
+     * @return void
+     */
     public function boot(Gate $gate)
     {
         $gate->define('role', function ($user, $roles) {
@@ -16,5 +23,14 @@ class AttestServiceProvider extends ServiceProvider
         $gate->define('permission', function ($user, $permission) {
             return $user->hasPermission($permission);
         });
+    }
+
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
     }
 }
