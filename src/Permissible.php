@@ -45,7 +45,7 @@ trait Permissible
     protected function permitOne($sources, $targets)
     {
         foreach ($targets as $target) {
-            if ($sources->containsStrict('slug', trim($target)) === true) {
+            if ($this->permitExists($sources, $target) === true) {
                 return true;
             }
         }
@@ -56,7 +56,7 @@ trait Permissible
     protected function permitAll($sources, $targets)
     {
         foreach ($targets as $target) {
-            if ($sources->containsStrict('slug', trim($target)) === false) {
+            if ($this->permitExists($sources, $target) === false) {
                 return false;
             }
         }
@@ -69,5 +69,12 @@ trait Permissible
         return array_map(function ($target) {
             return is_object($target) ? $target->slug : $target;
         }, $targets);
+    }
+
+    private function permitExists($sources, $target)
+    {
+        return $sources->contains(function ($source) use ($target) {
+            return $source->slug === $target;
+        });
     }
 }
