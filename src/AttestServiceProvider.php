@@ -32,5 +32,10 @@ class AttestServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        if ($this->app->runningInConsole() === true) {
+            $this->publishes([__DIR__.'/../database/migrations' => base_path('database/migrations')], 'migrations');
+
+            return;
+        }
     }
 }

@@ -25,7 +25,7 @@ trait HasRolesAndPermissions
             ->unionAll(
                 $roles
                     ->join('permissible', function ($join) use ($roleClass) {
-                        $join->on('permissible_type', '=', $roleClass)->on('permissible_id', '=', 'roleable.role_id');
+                        $join->on('permissible_type', '=', $roleClass)->on('permissible_id', '=', 'role_user.role_id');
                     })
                     ->join('permissions', function ($join) {
                         $join->on('permissions.id', '=', 'permissible.permission_id');
