@@ -3,6 +3,7 @@
 namespace Recca0120\Attest;
 
 use Illuminate\Database\Eloquent\Model;
+use Recca0120\Attest\Concerns\HasPermissions;
 
 class Role extends Model
 {

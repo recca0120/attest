@@ -1,6 +1,6 @@
 <?php
 
-namespace Recca0120\Attest;
+namespace Recca0120\Attest\Concerns;
 
 trait Permissible
 {

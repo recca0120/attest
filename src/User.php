@@ -3,6 +3,7 @@
 namespace Recca0120\Attest;
 
 use Illuminate\Database\Eloquent\Model;
+use Recca0120\Attest\Concerns\HasRolesAndPermissions;
 
 class User extends Model
 {
@@ -25,4 +26,9 @@ class User extends Model
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 }

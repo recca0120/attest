@@ -1,15 +1,10 @@
 <?php
 
-namespace Recca0120\Attest;
+namespace Recca0120\Attest\Concerns;
 
 trait HasRoles
 {
     use Permissible;
-
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
-    }
 
     public function hasRole($roles)
     {

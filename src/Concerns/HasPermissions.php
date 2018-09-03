@@ -1,6 +1,8 @@
 <?php
 
-namespace Recca0120\Attest;
+namespace Recca0120\Attest\Concerns;
+
+use Recca0120\Attest\Permission;
 
 trait HasPermissions
 {
