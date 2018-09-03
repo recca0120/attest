@@ -8,9 +8,6 @@ trait HasRoles
 
     public function hasRole($roles)
     {
-        return $this->permit(
-            $this->roles,
-            func_num_args() > 1 ? func_get_args() : $roles
-        );
+        return $this->permit($this->roles, func_num_args() > 1 ? func_get_args() : $roles);
     }
 }

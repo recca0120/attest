@@ -6,7 +6,7 @@ use CreateRolesTable;
 use CreateRoleUserTable;
 use CreatePermissionsTable;
 use Illuminate\Events\Dispatcher;
-use CreatePermissionGrantedsTable;
+use CreatePermissibleTable;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Schema;
@@ -44,7 +44,7 @@ trait DatabaseSetup
             CreateRolesTable::class,
             CreateRoleUserTable::class,
             CreatePermissionsTable::class,
-            CreatePermissionGrantedsTable::class,
+            CreatePermissibleTable::class,
         ];
 
         foreach ($migrations as $migration) {

@@ -10,18 +10,15 @@ trait HasPermissions
 
     public function permissions()
     {
-        return $this->morphToMany(Permission::class, 'permission_granted')->withPivot([
-            'permission_granted_id',
-            'permission_granted_type',
+        return $this->morphToMany(Permission::class, 'permissible', 'permissible')->withPivot([
+            'permissible_id',
+            'permissible_type',
             'permission_id',
         ]);
     }
 
     public function hasPermission($permissions)
     {
-        return $this->permit(
-            $this->permissions,
-            func_num_args() > 1 ? func_get_args() : $permissions
-        );
+        return $this->permit($this->permissions, func_num_args() > 1 ? func_get_args() : $permissions);
     }
 }
