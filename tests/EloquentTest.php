@@ -2,19 +2,20 @@
 
 namespace Recca0120\Attest\Tests;
 
-use Recca0120\Attest\Role;
-use Recca0120\Attest\User;
+use Illuminate\Support\Collection;
+use Illuminate\Testing\Assert;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use PHPUnit\Framework\TestCase;
 use Recca0120\Attest\Permission;
-use Illuminate\Support\Collection;
-use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use Recca0120\Attest\Role;
+use Recca0120\Attest\User;
 
 class EloquentTest extends TestCase
 {
     use DatabaseSetup;
     use MockeryPHPUnitIntegration;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->setupDatabase();
@@ -35,7 +36,7 @@ class EloquentTest extends TestCase
 
         $user->roles()->saveMany($roles);
 
-        $this->assertArraySubset($roles->toArray(), $user->roles->toArray());
+        Assert::assertArraySubset($roles->toArray(), $user->roles->toArray());
     }
 
     public function test_role_has_permissions()
@@ -49,7 +50,7 @@ class EloquentTest extends TestCase
 
         $role->permissions()->saveMany($permissions);
 
-        $this->assertArraySubset($permissions->toArray(), $role->permissions->toArray());
+        Assert::assertArraySubset($permissions->toArray(), $role->permissions->toArray());
     }
 
     public function test_user_has_permissions()
@@ -67,7 +68,7 @@ class EloquentTest extends TestCase
 
         $user->permissions()->saveMany($permissions);
 
-        $this->assertArraySubset($permissions->toArray(), $user->permissions->toArray());
+        Assert::assertArraySubset($permissions->toArray(), $user->permissions->toArray());
     }
 
     public function test_user_get_all_permission()
@@ -93,7 +94,7 @@ class EloquentTest extends TestCase
 
         $user->roles()->saveMany([$role]);
 
-        $this->assertArraySubset($permissions->toArray(), $user->permissions->toArray());
+        Assert::assertArraySubset($permissions->toArray(), $user->permissions->toArray());
     }
 
     private function createRole($name)

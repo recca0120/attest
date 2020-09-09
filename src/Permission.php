@@ -25,9 +25,7 @@ class Permission extends Model
     public function users()
     {
         return $this->morphedByMany(User::class, 'permissible')->withPivot([
-            'permissible_id',
-            'permissible_type',
-            'permission_id',
+            'permissible_id', 'permissible_type', 'permission_id',
         ]);
     }
 }

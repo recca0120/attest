@@ -2,8 +2,8 @@
 
 namespace Recca0120\Attest;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Auth\Access\Gate;
+use Illuminate\Support\ServiceProvider;
 
 class AttestServiceProvider extends ServiceProvider
 {

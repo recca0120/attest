@@ -2,15 +2,15 @@
 
 namespace Recca0120\Attest\Tests;
 
-use CreateRolesTable;
-use CreateRoleableTable;
-use CreatePermissionsTable;
 use CreatePermissibleTable;
-use Illuminate\Events\Dispatcher;
+use CreatePermissionsTable;
+use CreateRoleableTable;
+use CreateRolesTable;
 use Illuminate\Container\Container;
+use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Events\Dispatcher;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 trait DatabaseSetup
 {

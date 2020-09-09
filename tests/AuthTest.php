@@ -2,18 +2,18 @@
 
 namespace Recca0120\Attest\Tests;
 
-use Recca0120\Attest\Role;
-use Recca0120\Attest\User;
-use PHPUnit\Framework\TestCase;
-use Recca0120\Attest\Permission;
 use Illuminate\Support\Collection;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
+use Recca0120\Attest\Permission;
+use Recca0120\Attest\Role;
+use Recca0120\Attest\User;
 
 class AuthTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

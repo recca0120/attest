@@ -11,9 +11,7 @@ trait HasPermissions
     public function permissions()
     {
         return $this->morphToMany(Permission::class, 'permissible', 'permissible')->withPivot([
-            'permissible_id',
-            'permissible_type',
-            'permission_id',
+            'permissible_id', 'permissible_type', 'permission_id',
         ]);
     }
 
