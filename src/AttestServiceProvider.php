@@ -10,8 +10,7 @@ class AttestServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application events.
      *
-     * @param \Illuminate\Contracts\Auth\Access\Gate
-     *
+     * @param Gate $gate
      * @return void
      */
     public function boot(Gate $gate)

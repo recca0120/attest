@@ -3,6 +3,7 @@
 namespace Recca0120\Attest;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Recca0120\Attest\Concerns\HasRolesAndPermissions;
 
 class User extends Model
@@ -27,6 +28,9 @@ class User extends Model
         'password', 'remember_token',
     ];
 
+    /**
+     * @return MorphToMany
+     */
     public function roles()
     {
         return $this->morphToMany(Role::class, 'roleable', 'roleable');

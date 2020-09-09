@@ -4,12 +4,20 @@ namespace Recca0120\Attest\Concerns;
 
 trait Permissible
 {
+    /**
+     * @param $sources
+     * @param $targets
+     * @return bool
+     */
     protected function permit($sources, $targets)
     {
-        if (is_string($targets) === true && (
-            $this->permitAnd($sources, $targets) === true ||
-            $this->permitOr($sources, $targets) === true
-        )) {
+        if (
+            is_string($targets) === true &&
+            (
+                $this->permitAnd($sources, $targets) === true ||
+                $this->permitOr($sources, $targets) === true
+            )
+        ) {
             return true;
         }
 
@@ -19,6 +27,11 @@ trait Permissible
         );
     }
 
+    /**
+     * @param $sources
+     * @param $targets
+     * @return bool
+     */
     protected function permitAnd($sources, $targets)
     {
         $pattern = '/(\sand\s|&&|&|,)/i';
@@ -29,6 +42,11 @@ trait Permissible
         return $this->permitAll($sources, preg_split($pattern, $targets));
     }
 
+    /**
+     * @param $sources
+     * @param $targets
+     * @return bool
+     */
     protected function permitOr($sources, $targets)
     {
         $pattern = '/(\sor\s|\|\||\|)/i';
@@ -39,6 +57,11 @@ trait Permissible
         return $this->permitOne($sources, preg_split($pattern, $targets));
     }
 
+    /**
+     * @param $sources
+     * @param $targets
+     * @return bool
+     */
     protected function permitOne($sources, $targets)
     {
         $slugSources = $sources->pluck('slug')->toArray();
@@ -51,6 +74,11 @@ trait Permissible
         return false;
     }
 
+    /**
+     * @param $sources
+     * @param $targets
+     * @return bool
+     */
     protected function permitAll($sources, $targets)
     {
         $slugSources = $sources->pluck('slug')->toArray();
@@ -63,6 +91,10 @@ trait Permissible
         return true;
     }
 
+    /**
+     * @param array $targets
+     * @return array
+     */
     protected function getPermissibleName(array $targets)
     {
         return array_map(function ($target) {
